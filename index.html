@@ -1,0 +1,115 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InsureAI — Insurance Info &amp; Vehicle Police Records</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">IA</div>
+        <div>
+          <h1>InsureAI <span class="tag">Demo</span></h1>
+          <p id="subHeader">Choose a mode to begin</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button type="button" id="homeBtn" class="btn-ghost hidden">← Mode Menu</button>
+        <button type="button" id="switchModeBtn" class="btn-ghost hidden">Switch Mode</button>
+        <button type="button" id="settingsBtn" class="btn-ghost">API Key</button>
+      </div>
+    </header>
+
+    <!-- Optional Gemini API key drawer -->
+    <section id="apiDrawer" class="api-drawer hidden">
+      <input
+        type="password"
+        id="apiKeyInput"
+        placeholder="Paste Gemini API key for live AI (or leave blank for question-aware demo AI)"
+      />
+      <button type="button" id="saveApiBtn" class="btn-primary">Save Key</button>
+    </section>
+
+    <!-- SCREEN 0: Pre-Chat Mode Selection -->
+    <section id="modeSelectScreen" class="screen">
+      <div class="welcome-card">
+        <h2>How would you like to start?</h2>
+        <p>Select a separate mode below.</p>
+
+        <div class="choice-grid">
+          <button type="button" id="chooseInsuranceBtn" class="choice-card">
+            <span class="choice-num">Option 1</span>
+            <h3>Info About Insurance</h3>
+            <p>Ask specific insurance questions across any policy type (with optional image upload). Answers cover <strong>Age</strong>, <strong>Amount</strong>, <strong>Time Period</strong>, and <strong>Rules</strong>.</p>
+          </button>
+
+          <button type="button" id="chooseVehicleBtn" class="choice-card">
+            <span class="choice-num">Option 2</span>
+            <h3>Vehicle Data</h3>
+            <p>Add or update a <strong>Vehicle Number</strong> separately to view its <strong>previous</strong> and <strong>current police cases</strong>.</p>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: Separate Vehicle Data & Police Case Screen -->
+    <section id="vehicleScreen" class="screen hidden">
+      <div class="vehicle-card">
+        <div class="section-head">
+          <h2>Vehicle Police Case Lookup</h2>
+          <p>Enter a vehicle number and click <strong>Update &amp; Check Cases</strong> to view previous and current records.</p>
+        </div>
+
+        <form id="vehicleForm" class="vehicle-form">
+          <input
+            type="text"
+            id="vehicleNoInput"
+            placeholder="Enter vehicle number (e.g. KA01AB1234, KA05CD5678, KA09EF9012)"
+            required
+          />
+          <button type="submit" class="btn-primary">Update &amp; Check Cases</button>
+        </form>
+
+        <div class="sample-row">
+          <span>Sample numbers:</span>
+          <button type="button" class="chip" data-veh="KA01AB1234">KA01AB1234</button>
+          <button type="button" class="chip" data-veh="KA05CD5678">KA05CD5678</button>
+          <button type="button" class="chip" data-veh="KA09EF9012">KA09EF9012</button>
+        </div>
+
+        <div id="vehicleResultBox" class="vehicle-result hidden"></div>
+      </div>
+    </section>
+
+    <!-- SCREEN 1: Separate Insurance Info Chat -->
+    <section id="chatScreen" class="screen chat-layout hidden">
+      <div id="chatLog" class="chat-log"></div>
+
+      <div id="imgPreviewBar" class="img-bar hidden">
+        <img id="previewImg" alt="Uploaded image" />
+        <span id="previewName"></span>
+        <button type="button" id="removeImgBtn" class="btn-danger">Remove</button>
+      </div>
+
+      <form id="chatForm" class="chat-form">
+        <label for="chatImgInput" class="btn-ghost attach-label">📷 Image</label>
+        <input type="file" id="chatImgInput" accept="image/*" hidden />
+        <input
+          type="text"
+          id="chatInput"
+          placeholder="Ask any insurance question (health, motor, term, travel, property, claims, rules)..."
+          required
+        />
+        <button type="submit" class="btn-primary">Send</button>
+      </form>
+    </section>
+  </div>
+
+  <canvas id="canvasInspector" class="hidden"></canvas>
+  <script src="script.js"></script>
+</body>
+</html>
